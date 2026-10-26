@@ -1,0 +1,13 @@
+{
+  "name": "MyBizGate",
+  "short_name": "MyBizGate",
+  "description": "Business websites, online booking systems and business management solutions for Malaysian SMEs.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#0b1e3f",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff7ee">
+  <meta name="description" content="Dental Gate Clinic offers warm, welcoming dental care for children, adults and older family members.">
+  <title>Dental Gate Clinic | Gentle Care for Every Generation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #113d4d;
+      --navy-2: #0b2a37;
+      --teal: #168a94;
+      --teal-2: #0e6d77;
+      --aqua: #dff5f5;
+      --sky: #eef9fb;
+      --mint: #d9f0e7;
+      --cream: #fff7ee;
+      --white: #ffffff;
+      --coral: #f58b74;
+      --ink: #17343f;
+      --muted: #647c84;
+      --line: #d5e7ea;
+      --max: 1200px;
+      --serif: "DM Serif Display", Georgia, serif;
+      --sans: "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #fff; color: var(--ink); font-family: var(--sans); line-height: 1.65; overflow-x: hidden; }
+    body.menu-open { overflow: hidden; }
+    img { display: block; width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+    .skip-link { position: fixed; left: 18px; top: -70px; z-index: 100; background: var(--navy); color: #fff; padding: 10px 16px; border-radius: 8px; }
+    .skip-link:focus { top: 18px; }
+    .container { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+    .label { display: inline-flex; align-items: center; gap: 9px; color: var(--teal-2); font-size: .7rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+    .label::before { content: ""; width: 8px; height: 8px; border: 2px solid var(--teal); border-radius: 50%; }
+    .heading { margin: 14px 0 18px; color: var(--navy); font-family: var(--serif); font-size: clamp(3rem, 6vw, 5.7rem); font-weight: 400; line-height: .98; letter-spacing: -.025em; }
+    .lead { max-width: 62ch; color: var(--muted); }
+    .button { display: inline-flex; min-height: 50px; padding: 0 23px; align-items: center; justify-content: center; gap: 9px; border: 1px solid transparent; border-radius: 12px; font-size: .8rem; font-weight: 800; transition: .25s ease; }
+    .button-primary { background: var(--teal); color: #fff; box-shadow: 0 12px 28px rgba(22,138,148,.2); }
+    .button-primary:hover { background: var(--teal-2); transform: translateY(-2px); }
+    .button-white { background: #fff; color: var(--navy); border-color: var(--line); }
+    .button-white:hover { border-color: var(--teal); color: var(--teal-2); }
+
+    .utility { background: var(--navy-2); color: #d6e7ea; font-size: .69rem; }
+    .utility-row { min-height: 34px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .utility-row span { display: inline-flex; align-items: center; gap: 7px; }
+    .utility-row span:first-child::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #78d8ad; box-shadow: 0 0 0 4px rgba(120,216,173,.12); }
+    .site-header { position: absolute; z-index: 40; inset: 34px 0 auto; }
+    .nav { min-height: 86px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--navy); font-size: 1.25rem; font-weight: 800; }
+    .brand-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px 14px 14px 4px; background: var(--teal); color: #fff; box-shadow: 0 8px 20px rgba(22,138,148,.18); }
+    .brand-mark svg { width: 25px; height: 25px; }
+    .brand-copy { display: grid; line-height: 1; }
+    .brand-copy small { margin-top: 6px; color: #56737d; font-size: .55rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 25px; }
+    .nav-links a:not(.button) { color: #315563; font-size: .75rem; font-weight: 700; }
+    .nav-links a:not(.button):hover { color: var(--teal); }
+    .menu-toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.8); color: var(--navy); }
+
+    .hero { position: relative; min-height: 790px; background: var(--cream); overflow: hidden; }
+    .hero-media { position: absolute; inset: 0; z-index: 0; background: var(--cream); overflow: hidden; }
+    .hero-slide { position: absolute; inset: 0; display: block; opacity: 0; transform: scale(1.025); transition: opacity 1.1s ease, transform 7s ease; }
+    .hero-slide.is-active { z-index: 1; opacity: 1; transform: scale(1); }
+    .hero-slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(255,247,238,.99) 0%, rgba(255,247,238,.92) 30%, rgba(255,247,238,.12) 62%); }
+    .hero-inner { position: relative; z-index: 2; min-height: 790px; padding-top: 132px; display: grid; align-items: center; }
+    .hero-copy { width: min(590px, 49vw); padding: 70px 0 110px; }
+    .hero h1 { margin: 18px 0 22px; font-size: clamp(4rem, 7vw, 7rem); }
+    .hero h1 em { color: #d96550; font-style: normal; }
+    .hero-copy > p { max-width: 52ch; color: #56737d; font-size: 1.02rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 30px; }
+    .assurances { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 40px; color: #496873; font-size: .73rem; font-weight: 700; }
+    .assurances span { display: flex; align-items: center; gap: 7px; }
+    .assurances span::before { content: "✓"; width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: var(--mint); color: var(--teal-2); }
+    .hero-controls { position: absolute; left: 50%; bottom: 24px; z-index: 4; display: flex; align-items: center; gap: 5px; padding: 7px; border: 1px solid rgba(255,255,255,.82); border-radius: 999px; background: rgba(255,255,255,.82); backdrop-filter: blur(10px); transform: translateX(-50%); box-shadow: 0 8px 24px rgba(17,61,77,.12); }
+    .hero-dots { display: flex; align-items: center; gap: 5px; }
+    .hero-dots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 999px; background: rgba(17,61,77,.3); transition: width .25s ease, background .25s ease; }
+    .hero-dots button.is-active { width: 28px; background: var(--teal); }
+    .hero-pause { width: 28px; height: 28px; display: grid; place-items: center; margin-left: 2px; padding: 0; border: 0; border-radius: 50%; background: var(--navy); color: #fff; font-size: .62rem; line-height: 1; }
+    .rating-float { position: absolute; z-index: 3; right: 6vw; bottom: 34px; width: 265px; padding: 22px; border: 1px solid rgba(255,255,255,.8); border-radius: 22px; background: rgba(255,255,255,.88); backdrop-filter: blur(14px); box-shadow: 0 22px 55px rgba(17,61,77,.14); }
+    .rating-float small { color: var(--muted); font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+    .rating-line { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin: 8px 0; }
+    .rating-line strong { color: var(--navy); font-family: var(--serif); font-size: 3.6rem; line-height: .85; }
+    .stars { color: #f5a623; letter-spacing: .08em; white-space: nowrap; }
+    .rating-float p { margin: 10px 0 0; color: var(--muted); font-size: .68rem; }
+
+    .reassurance { position: relative; z-index: 4; margin-top: -1px; background: #fff; border-bottom: 1px solid var(--line); }
+    .reassurance-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .reassurance-item { display: flex; align-items: center; gap: 13px; padding: 26px 20px; border-right: 1px solid var(--line); }
+    .reassurance-item:last-child { border-right: 0; }
+    .reassurance-icon { width: 42px; height: 42px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 13px; background: var(--sky); color: var(--teal); font-size: 1.1rem; }
+    .reassurance-item strong { display: block; color: var(--navy); font-size: .8rem; }
+    .reassurance-item span { color: var(--muted); font-size: .67rem; }
+
+    section { padding: 105px 0; }
+    .care-heading { display: flex; justify-content: space-between; align-items: end; gap: 36px; }
+    .care-heading .lead { max-width: 42ch; }
+    .filter-tabs { display: flex; flex-wrap: wrap; gap: 9px; margin: 36px 0 28px; }
+    .filter-tab { padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--muted); font-size: .72rem; font-weight: 700; }
+    .filter-tab.active, .filter-tab:hover { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .treatment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .treatment-card { display: flex; flex-direction: column; min-height: 440px; overflow: hidden; border: 1px solid var(--line); border-radius: 24px; background: #fff; transition: .3s ease; }
+    .treatment-card:hover { transform: translateY(-5px); border-color: #9ed6da; box-shadow: 0 22px 45px rgba(17,61,77,.08); }
+    .treatment-card[hidden] { display: none; }
+    .treatment-visual { position: relative; height: 188px; overflow: hidden; background: var(--sky); }
+    .treatment-visual::after { content: ""; position: absolute; inset: auto 0 0; height: 42%; background: linear-gradient(transparent, rgba(11,42,55,.18)); pointer-events: none; }
+    .treatment-visual img { height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .treatment-card:hover .treatment-visual img { transform: scale(1.045); }
+    .treatment-tag { position: absolute; z-index: 1; left: 16px; top: 16px; padding: 7px 10px; border-radius: 999px; background: rgba(255,255,255,.91); color: var(--navy); font-size: .6rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; backdrop-filter: blur(8px); }
+    .treatment-card-body { display: flex; flex: 1; flex-direction: column; padding: 0 25px 25px; }
+    .treatment-icon { position: relative; width: 50px; height: 50px; display: grid; place-items: center; margin-top: -25px; border: 4px solid #fff; border-radius: 15px; background: var(--aqua); color: var(--teal); font-size: 1.25rem; }
+    .treatment-card:nth-child(2n) .treatment-icon { background: #fff0ec; color: #c6614d; }
+    .treatment-card h3 { margin: 18px 0 8px; color: var(--navy); font-size: 1.05rem; }
+    .treatment-card p { margin: 0 0 24px; color: var(--muted); font-size: .82rem; }
+    .treatment-card a { margin-top: auto; color: var(--teal-2); font-size: .72rem; font-weight: 800; }
+
+    .experience { background: var(--sky); }
+    .experience-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 75px; align-items: center; }
+    .experience-visual { position: relative; padding: 0 42px 42px 0; }
+    .experience-visual > img { min-height: 570px; object-fit: cover; border-radius: 26px 110px 26px 26px; }
+    .care-card { position: absolute; right: 0; bottom: 0; width: 240px; padding: 24px; border-radius: 20px; background: var(--navy); color: #fff; box-shadow: 0 20px 50px rgba(17,61,77,.24); }
+    .care-card strong { display: block; font-family: var(--serif); font-size: 2rem; font-weight: 400; line-height: 1; }
+    .care-card p { margin: 9px 0 0; color: #c4d8dd; font-size: .72rem; }
+    .experience-copy .heading { font-size: clamp(3.2rem, 5vw, 5rem); }
+    .comfort-list { display: grid; gap: 15px; margin-top: 30px; }
+    .comfort-item { display: grid; grid-template-columns: 36px 1fr; gap: 12px; }
+    .comfort-item > span { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 10px; background: var(--mint); color: var(--teal-2); font-weight: 800; }
+    .comfort-item strong { display: block; color: var(--navy); font-size: .85rem; }
+    .comfort-item p { margin: 2px 0 0; color: var(--muted); font-size: .78rem; }
+
+    .journey { background: #fff; }
+    .journey-grid { display: grid; grid-template-columns: .78fr 1.22fr; gap: 80px; align-items: start; }
+    .journey-intro { position: sticky; top: 30px; }
+    .journey-list { position: relative; display: grid; gap: 14px; }
+    .journey-list::before { content: ""; position: absolute; left: 28px; top: 54px; bottom: 54px; width: 1px; background: var(--line); }
+    .journey-step { position: relative; z-index: 1; display: grid; grid-template-columns: 58px 1fr; gap: 20px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+    .journey-number { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 18px; background: var(--aqua); color: var(--teal-2); font-weight: 800; }
+    .journey-step h3 { margin: 2px 0 6px; color: var(--navy); font-size: .95rem; }
+    .journey-step p { margin: 0; color: var(--muted); font-size: .8rem; }
+
+    .reviews { background: var(--navy); color: #fff; overflow: hidden; }
+    .reviews .label { color: #74d5d9; }
+    .reviews .heading { color: #fff; }
+    .reviews-head { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; }
+    .google-summary { min-width: 260px; padding: 22px 25px; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; background: rgba(255,255,255,.06); }
+    .google-summary > span { color: #bdd2d7; font-size: .68rem; font-weight: 700; }
+    .google-summary-row { display: flex; align-items: center; justify-content: space-between; margin-top: 7px; }
+    .google-summary strong { font-family: var(--serif); font-size: 3rem; font-weight: 400; line-height: 1; }
+    .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 42px; }
+    .review-card { padding: 27px; border-radius: 20px; background: #fff; color: var(--ink); }
+    .review-card .stars { font-size: .85rem; }
+    .review-card blockquote { margin: 20px 0 25px; color: var(--navy); font-family: var(--serif); font-size: 1.38rem; line-height: 1.25; }
+    .reviewer { display: flex; align-items: center; gap: 11px; }
+    .reviewer span { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; background: var(--sky); color: var(--teal-2); font-size: .72rem; font-weight: 800; }
+    .reviewer strong { display: block; font-size: .75rem; }
+    .reviewer small { display: block; color: var(--muted); font-size: .62rem; }
+    .review-note { margin: 22px 0 0; color: #9ebbc2; font-size: .68rem; }
+
+    .community { background: var(--sky); }
+    .community-grid { display: grid; grid-template-columns: .72fr 1.28fr; gap: 70px; align-items: start; }
+    .facebook-intro { position: sticky; top: 30px; }
+    .facebook-logo { width: 52px; height: 52px; display: grid; place-items: center; margin-bottom: 26px; border-radius: 50%; background: #1877f2; color: #fff; font-size: 1.75rem; font-weight: 800; }
+    .facebook-intro .heading { font-size: clamp(3rem, 5vw, 4.8rem); }
+    .facebook-page { padding: 18px; border: 1px solid var(--line); border-radius: 22px; background: #fff; box-shadow: 0 18px 50px rgba(17,61,77,.08); }
+    .fb-page-header { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 8px 8px 20px; }
+    .fb-page-name { display: flex; align-items: center; gap: 11px; }
+    .fb-page-name span { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; background: var(--teal); color: #fff; font-weight: 800; }
+    .fb-page-name strong { display: block; color: var(--navy); font-size: .83rem; }
+    .fb-page-name small { display: block; color: var(--muted); font-size: .63rem; }
+    .fb-button { padding: 9px 13px; border: 0; border-radius: 8px; background: #e7f1ff; color: #1268d3; font-size: .68rem; font-weight: 800; }
+    .fb-posts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .fb-post { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+    .fb-post:first-child { grid-row: span 2; }
+    .fb-post img { height: 210px; object-fit: cover; }
+    .fb-post:first-child img { height: 360px; }
+    .fb-post-copy { padding: 15px; }
+    .fb-post-copy small { color: var(--muted); font-size: .62rem; }
+    .fb-post-copy p { margin: 6px 0 12px; color: var(--navy); font-size: .75rem; font-weight: 600; }
+    .fb-actions { display: flex; gap: 18px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: .64rem; font-weight: 700; }
+
+    .faq-grid { display: grid; grid-template-columns: .72fr 1.28fr; gap: 80px; align-items: start; }
+    .faq-list { border-top: 1px solid var(--line); }
+    .faq-item { border-bottom: 1px solid var(--line); }
+    .faq-question { width: 100%; display: flex; justify-content: space-between; gap: 20px; padding: 22px 0; border: 0; background: transparent; color: var(--navy); text-align: left; font-weight: 700; }
+    .faq-question span { color: var(--teal); font-size: 1.2rem; transition: transform .2s ease; }
+    .faq-question[aria-expanded="true"] span { transform: rotate(45deg); }
+    .faq-answer { display: none; padding: 0 40px 22px 0; color: var(--muted); font-size: .82rem; }
+    .faq-answer.open { display: block; }
+
+    .booking { padding-top: 20px; }
+    .booking-shell { position: relative; overflow: hidden; display: grid; grid-template-columns: .78fr 1.22fr; border-radius: 30px; background: var(--teal); color: #fff; }
+    .booking-shell::before { content: ""; position: absolute; width: 400px; aspect-ratio: 1; left: -180px; bottom: -230px; border: 70px solid rgba(255,255,255,.05); border-radius: 50%; }
+    .booking-copy { position: relative; padding: 58px; }
+    .booking-copy .label { color: #d8ffff; }
+    .booking-copy .heading { color: #fff; font-size: clamp(3.4rem, 5vw, 5.2rem); }
+    .booking-copy p { color: #d8f0f2; }
+    .booking-copy ul { list-style: none; display: grid; gap: 10px; margin: 30px 0 0; padding: 0; color: #e3f7f8; font-size: .78rem; }
+    .booking-form { padding: 48px; background: #fff; color: var(--ink); }
+    .booking-form h3 { margin: 0 0 25px; color: var(--navy); font-family: var(--serif); font-size: 2.4rem; font-weight: 400; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+    .field { display: grid; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    label { color: var(--navy); font-size: .67rem; font-weight: 800; }
+    input, select, textarea { width: 100%; padding: 12px 13px; border: 1px solid var(--line); border-radius: 10px; background: #fbfeff; color: var(--ink); }
+    textarea { min-height: 84px; resize: vertical; }
+    .form-actions { display: flex; flex-wrap: wrap; gap: 13px; align-items: center; margin-top: 24px; }
+    .form-status { color: #3b7653; font-size: .7rem; font-weight: 700; }
+
+    .location { background: #eaf7f8; }
+    .location-grid { display: grid; grid-template-columns: .72fr 1.28fr; gap: 46px; align-items: center; }
+    .location-copy .heading { margin: 12px 0 18px; }
+    .location-address { display: block; margin: 24px 0; color: var(--navy); font-style: normal; font-weight: 700; }
+    .location-map { position: relative; min-height: 420px; overflow: hidden; border: 1px solid var(--line); border-radius: 28px; background: #dceff1; box-shadow: var(--shadow); }
+    .location-map iframe { display: block; width: 100%; min-height: 420px; border: 0; }
+    .location-map .button { position: absolute; right: 16px; bottom: 16px; }
+
+    .mybizgate-cta { padding: 42px 0 85px; }
+    .mybizgate-panel { display: grid; grid-template-columns: 1.25fr auto; gap: 40px; align-items: center; padding: 44px; border: 1px solid #cbe7eb; border-radius: 24px; background: linear-gradient(120deg, #f2fcfd, #dff4f6); }
+    .mybizgate-panel .heading { margin: 8px 0 10px; font-size: clamp(2.6rem, 5vw, 4.5rem); }
+    .mybizgate-panel p { max-width: 70ch; margin: 0; color: var(--muted); }
+    .mybizgate-services { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 18px; color: var(--navy); font-size: .7rem; font-weight: 800; }
+    .mybizgate-services span::before { content: "✓"; margin-right: 7px; color: var(--teal); }
+
+    footer { padding: 34px 0; background: var(--navy-2); color: #aac1c7; font-size: .72rem; }
+    .footer-row { display: flex; justify-content: space-between; gap: 24px; }
+    .reveal { opacity: 0; transform: translateY(22px); transition: .65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .location:target .reveal, .mybizgate-cta:target .reveal { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .container { width: min(100% - 32px, var(--max)); }
+      .menu-toggle { display: grid; place-items: center; }
+      .nav-links { position: fixed; inset: 120px 16px auto; display: grid; gap: 0; padding: 14px; border: 1px solid var(--line); border-radius: 16px; background: #fff; box-shadow: 0 20px 50px rgba(17,61,77,.15); opacity: 0; pointer-events: none; transform: translateY(-14px); transition: .25s ease; }
+      .nav-links.open { opacity: 1; pointer-events: auto; transform: none; }
+      .nav-links a { padding: 14px; }
+      .hero::after { background: linear-gradient(90deg, rgba(255,247,238,.97), rgba(255,247,238,.62) 53%, rgba(255,247,238,.08)); }
+      .hero-copy { width: 67%; }
+      .rating-float { display: none; }
+      .reassurance-grid { grid-template-columns: 1fr 1fr; }
+      .care-heading, .reviews-head { display: grid; align-items: start; }
+      .treatment-grid { grid-template-columns: 1fr 1fr; }
+      .experience-grid, .journey-grid, .community-grid, .faq-grid, .booking-shell, .location-grid, .mybizgate-panel { grid-template-columns: 1fr; }
+      .journey-intro, .facebook-intro { position: relative; top: auto; }
+      .review-grid { grid-template-columns: 1fr 1fr; }
+      .review-card:last-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 640px) {
+      section { padding: 76px 0; }
+      .utility-row span:last-child { display: none; }
+      .site-header { top: 34px; }
+      .nav { min-height: 72px; }
+      .nav-links { top: 106px; }
+      .hero, .hero-inner { min-height: 780px; }
+      .hero-media { inset: 0 0 auto; height: 430px; }
+      .hero-slide img { object-position: center; }
+      .hero::after { background: linear-gradient(180deg, rgba(255,247,238,.02) 0%, rgba(255,247,238,.08) 38%, var(--cream) 55%, var(--cream) 100%); }
+      .hero-inner { align-items: end; padding-top: 340px; }
+      .hero-copy { width: 100%; padding: 42px 0 54px; }
+      .hero h1 { font-size: clamp(2.5rem, 11.8vw, 4rem); white-space: nowrap; }
+      .hero-controls { top: 394px; bottom: auto; }
+      .reassurance-grid { grid-template-columns: 1fr; }
+      .reassurance-item { border-right: 0; border-bottom: 1px solid var(--line); }
+      .treatment-grid, .review-grid { grid-template-columns: 1fr; }
+      .treatment-visual { height: 220px; }
+      .review-card:last-child { grid-column: auto; }
+      .experience-grid { gap: 50px; }
+      .experience-visual { padding: 0 20px 36px 0; }
+      .experience-visual > img { min-height: 430px; border-radius: 20px 70px 20px 20px; }
+      .care-card { width: 200px; }
+      .journey-grid, .community-grid, .faq-grid { gap: 40px; }
+      .fb-posts { grid-template-columns: 1fr; }
+      .fb-post:first-child { grid-row: auto; }
+      .fb-post:first-child img, .fb-post img { height: 230px; }
+      .booking-copy, .booking-form { padding: 34px 23px; }
+      .location-map, .location-map iframe { min-height: 310px; }
+      .location-map .button { right: 12px; bottom: 12px; }
+      .mybizgate-panel { padding: 32px 24px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .footer-row { display: grid; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+      .hero-slide { transform: none; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="utility"><div class="container utility-row"><span>Welcoming children, adults and seniors today</span><span>Mon–Sat · 9:00 AM–6:00 PM · Kuala Lumpur</span></div></div>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Dental Gate Clinic home"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7.1 3.2c1.7-.2 3.1.8 4.9.8s3.2-1 4.9-.8c2.6.3 3.8 2.5 3.6 5-.2 2.1-1.4 3.7-2.1 5.7-.8 2.1-.9 6.9-3.4 6.9-1.6 0-1.4-4.8-3-4.8s-1.4 4.8-3 4.8c-2.5 0-2.6-4.8-3.4-6.9-.7-2-1.9-3.6-2.1-5.7-.2-2.5 1-4.7 3.6-5Z"/></svg></span><span class="brand-copy">Dental Gate Clinic<small>Care for every generation</small></span></a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open navigation">☰</button>
+      <nav class="nav-links" id="navLinks" aria-label="Primary navigation"><a href="#treatments">Treatments</a><a href="#experience">Your visit</a><a href="#reviews">Reviews</a><a href="#community">Facebook</a><a href="#faq">FAQ</a><a href="#location">Find us</a><a class="button button-primary" href="#booking">Request appointment</a></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-media" id="heroMedia">
+        <picture class="hero-slide is-active" aria-hidden="false">
+          <source media="(max-width: 640px)" srcset="images/dentalgate-hero-generations-mobile-v4.webp">
+          <img src="images/dentalgate-hero-generations-v4.webp" alt="A smiling dentist teaches a child and his grandfather how to brush using a tooth model" fetchpriority="high" decoding="async">
+        </picture>
+        <picture class="hero-slide" aria-hidden="true">
+          <source media="(max-width: 640px)" srcset="images/dentalgate-hero-women-consultation-mobile-v5.webp">
+          <img src="images/dentalgate-hero-women-consultation-v5.webp" alt="A Muslim female dentist explains a dental scan to a female patient" decoding="async">
+        </picture>
+        <picture class="hero-slide" aria-hidden="true">
+          <source media="(max-width: 640px)" srcset="images/dentalgate-hero-senior-woman-mobile-v5.webp">
+          <img src="images/dentalgate-hero-senior-woman-v5.webp" alt="A Muslim female dentist helps an older female patient review her smile" decoding="async">
+        </picture>
+      </div>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <div class="label">Little smiles to golden years</div>
+          <h1 class="heading">Gentle smiles,<br><em>for every age.</em></h1>
+          <p>Friendly first visits for children, patient support for older adults, and clear, gentle care that helps every member of the family feel at home.</p>
+          <div class="hero-actions"><a class="button button-primary" href="#booking">Request an appointment</a><a class="button button-white" href="#treatments">Explore treatments</a></div>
+          <div class="assurances"><span>Happy first visits</span><span>Patient senior care</span><span>Clear guidance</span></div>
+        </div>
+      </div>
+      <div class="hero-controls"><div class="hero-dots" id="heroDots" role="group" aria-label="Choose a Dental Gate Clinic banner"></div><button class="hero-pause" id="heroPause" type="button" aria-label="Pause banner animation" aria-pressed="false">❚❚</button></div>
+      <aside class="rating-float"><small>Google rating preview</small><div class="rating-line"><strong>4.9</strong><span class="stars" aria-label="4.9 out of 5 stars">★★★★★</span></div><p>Illustrative proposal data. Connect the client's verified Google Business Profile before launch.</p></aside>
+    </section>
+
+    <div class="reassurance"><div class="container reassurance-grid"><div class="reassurance-item"><span class="reassurance-icon">◷</span><div><strong>Easy scheduling</strong><span>Request a preferred date online</span></div></div><div class="reassurance-item"><span class="reassurance-icon">♡</span><div><strong>Gentle approach</strong><span>Care explained at every stage</span></div></div><div class="reassurance-item"><span class="reassurance-icon">◇</span><div><strong>Modern environment</strong><span>Bright, calm treatment spaces</span></div></div><div class="reassurance-item"><span class="reassurance-icon">✓</span><div><strong>Clear follow-up</strong><span>Aftercare and next steps</span></div></div></div></div>
+
+    <section id="treatments">
+      <div class="container">
+        <div class="care-heading reveal"><div><div class="label">Care paths</div><h2 class="heading">The right care, easier to understand.</h2></div><p class="lead">Visitors can browse by need instead of deciphering a long clinical list. Filter the sample services to see how a focused treatment journey could work.</p></div>
+        <div class="filter-tabs reveal" role="tablist" aria-label="Filter treatments"><button class="filter-tab active" type="button" data-filter="all" role="tab" aria-selected="true">All care</button><button class="filter-tab" type="button" data-filter="everyday" role="tab" aria-selected="false">Everyday care</button><button class="filter-tab" type="button" data-filter="smile" role="tab" aria-selected="false">Smile care</button><button class="filter-tab" type="button" data-filter="urgent" role="tab" aria-selected="false">Urgent care</button></div>
+        <div class="treatment-grid reveal">
+          <article class="treatment-card" data-category="everyday"><div class="treatment-visual"><img src="images/dental-cleaning-v2.webp" alt="Dental hygienist providing a gentle routine cleaning" loading="lazy"><span class="treatment-tag">Everyday care</span></div><div class="treatment-card-body"><span class="treatment-icon">◌</span><h3>Check-up & cleaning</h3><p>Routine assessment, professional cleaning and practical prevention advice for long-term oral health.</p><a href="#booking">Ask about this care →</a></div></article>
+          <article class="treatment-card" data-category="everyday"><div class="treatment-visual"><img src="images/dental-family-v2.webp" alt="Dentist explaining oral care to a child and parent" loading="lazy"><span class="treatment-tag">Family care</span></div><div class="treatment-card-body"><span class="treatment-icon">⌁</span><h3>Family dentistry</h3><p>Age-appropriate care for children, adults and seniors with a reassuring, unhurried approach.</p><a href="#booking">Ask about this care →</a></div></article>
+          <article class="treatment-card" data-category="smile"><div class="treatment-visual"><img src="images/clinic-team.jpg" alt="Dentist comparing a natural smile shade with a patient" loading="lazy"><span class="treatment-tag">Smile care</span></div><div class="treatment-card-body"><span class="treatment-icon">✦</span><h3>Whitening</h3><p>Consultation-led whitening options explained around suitability, expectations and aftercare.</p><a href="#booking">Ask about this care →</a></div></article>
+          <article class="treatment-card" data-category="smile"><div class="treatment-visual"><img src="images/dental-aligner-planning-v2.webp" alt="Dentist discussing a digital smile plan and clear aligner" loading="lazy"><span class="treatment-tag">Digital planning</span></div><div class="treatment-card-body"><span class="treatment-icon">◇</span><h3>Aligners & smile planning</h3><p>A clear overview of assessment, treatment planning, timelines and ongoing review appointments.</p><a href="#booking">Ask about this care →</a></div></article>
+          <article class="treatment-card" data-category="urgent"><div class="treatment-visual"><img src="images/dentalgate-hero-v2.webp" alt="Dentist calmly discussing a patient's concern" loading="lazy" style="object-position:72% center"><span class="treatment-tag">Priority care</span></div><div class="treatment-card-body"><span class="treatment-icon">+</span><h3>Tooth discomfort</h3><p>Structured enquiries help the clinic understand symptoms and arrange the appropriate next step.</p><a href="#booking">Ask about this care →</a></div></article>
+          <article class="treatment-card" data-category="urgent"><div class="treatment-visual"><img src="images/treatment-room.jpg" alt="Dentist carrying out careful restorative treatment" loading="lazy"><span class="treatment-tag">Restorative care</span></div><div class="treatment-card-body"><span class="treatment-icon">⌁</span><h3>Repair & restoration</h3><p>Information for chipped, damaged or missing teeth, from assessment through suitable options.</p><a href="#booking">Ask about this care →</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience" id="experience">
+      <div class="container experience-grid">
+        <div class="experience-visual reveal"><img src="images/treatment-room.jpg" alt="Dentist providing care in a modern clinic" loading="lazy"><aside class="care-card"><strong>Clarity first.</strong><p>Show patients what the space, team and process feel like before they arrive.</p></aside></div>
+        <div class="experience-copy reveal"><div class="label">Designed around comfort</div><h2 class="heading">Modern care without the cold clinical feeling.</h2><p class="lead">The clinic story balances professional confidence with human reassurance—especially for patients who feel nervous or unsure about treatment.</p><div class="comfort-list"><div class="comfort-item"><span>1</span><div><strong>Listen before examining</strong><p>Start with concerns, history and what would make the visit feel more manageable.</p></div></div><div class="comfort-item"><span>2</span><div><strong>Explain in plain language</strong><p>Use visual, understandable guidance before asking patients to make decisions.</p></div></div><div class="comfort-item"><span>3</span><div><strong>Agree on the next step</strong><p>Summarise options, timing and follow-up so no one leaves feeling uncertain.</p></div></div></div></div>
+      </div>
+    </section>
+
+    <section class="journey">
+      <div class="container journey-grid">
+        <div class="journey-intro reveal"><div class="label">Your first visit</div><h2 class="heading">Know what happens next.</h2><p class="lead">A simple visit roadmap reduces uncertainty and helps reception teams spend less time answering the same questions.</p></div>
+        <div class="journey-list reveal"><article class="journey-step"><span class="journey-number">01</span><div><h3>Tell us what you need</h3><p>Choose a treatment interest, preferred date and share any concerns through one structured request.</p></div></article><article class="journey-step"><span class="journey-number">02</span><div><h3>Receive confirmation</h3><p>The clinic follows up through WhatsApp to confirm availability and relevant preparation.</p></div></article><article class="journey-step"><span class="journey-number">03</span><div><h3>Meet and assess</h3><p>Discuss your goals, review the current situation and understand appropriate options.</p></div></article><article class="journey-step"><span class="journey-number">04</span><div><h3>Leave with a clear plan</h3><p>Receive understandable next steps, aftercare and follow-up timing.</p></div></article></div>
+      </div>
+    </section>
+
+    <section class="reviews" id="reviews">
+      <div class="container">
+        <div class="reviews-head reveal"><div><div class="label">Patient confidence</div><h2 class="heading">Trust people can see.</h2></div><div class="google-summary"><span>Google rating preview</span><div class="google-summary-row"><strong>4.9</strong><span class="stars">★★★★★</span></div></div></div>
+        <div class="review-grid reveal"><article class="review-card"><span class="stars">★★★★★</span><blockquote>“Everything was explained calmly, and I never felt rushed into a decision.”</blockquote><div class="reviewer"><span>NF</span><div><strong>Sample patient</strong><small>Illustrative review</small></div></div></article><article class="review-card"><span class="stars">★★★★★</span><blockquote>“The appointment request was simple and the WhatsApp confirmation was very clear.”</blockquote><div class="reviewer"><span>AK</span><div><strong>Sample patient</strong><small>Illustrative review</small></div></div></article><article class="review-card"><span class="stars">★★★★★</span><blockquote>“A bright, friendly clinic experience that put my family at ease from the start.”</blockquote><div class="reviewer"><span>SL</span><div><strong>Sample patient</strong><small>Illustrative review</small></div></div></article></div>
+        <p class="review-note">Proposal placeholder: replace the displayed score and quotes with verified Google Business Profile data before publication.</p>
+      </div>
+    </section>
+
+    <section class="community" id="community">
+      <div class="container community-grid">
+        <div class="facebook-intro reveal"><span class="facebook-logo">f</span><div class="label">Community updates</div><h2 class="heading">Helpful care beyond the chair.</h2><p class="lead">A Facebook section can keep families informed through oral-care tips, clinic news and familiar faces from the team.</p></div>
+        <div class="facebook-page reveal">
+          <div class="fb-page-header"><div class="fb-page-name"><span>DG</span><div><strong>Dental Gate Clinic</strong><small>Sample Facebook page preview</small></div></div><button class="fb-button" type="button">f&nbsp; Follow page</button></div>
+          <div class="fb-posts"><article class="fb-post"><img src="images/dentalgate-hero-v2.webp" alt="Friendly dentist consulting with a patient" loading="lazy"><div class="fb-post-copy"><small>Dental Gate · Sample post</small><p>Meet the caring approach that makes every family visit feel clear, calm and comfortable.</p><div class="fb-actions"><span>Like</span><span>Comment</span><span>Share</span></div></div></article><article class="fb-post"><img src="images/clinic-team.jpg" alt="Dentist discussing a smile shade guide with a patient" loading="lazy"><div class="fb-post-copy"><small>Smile guide</small><p>How careful shade matching supports a natural-looking smile result.</p><div class="fb-actions"><span>Like</span><span>Share</span></div></div></article><article class="fb-post"><img src="images/consultation.jpg" alt="Dental professional carrying out an assessment" loading="lazy"><div class="fb-post-copy"><small>What to expect</small><p>How a first assessment helps create a care plan that fits you.</p><div class="fb-actions"><span>Like</span><span>Share</span></div></div></article></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container faq-grid">
+        <div class="reveal"><div class="label">Before you visit</div><h2 class="heading">Good questions are welcome.</h2><p class="lead">Use the final answers to address the clinic's most common enquiries and reduce back-and-forth at reception.</p></div>
+        <div class="faq-list reveal"><div class="faq-item"><button class="faq-question" type="button" aria-expanded="false">What should I bring to my first appointment?<span>+</span></button><div class="faq-answer">Bring any relevant records, medication information and a short note about your main concern. The clinic can confirm exact requirements when your appointment is accepted.</div></div><div class="faq-item"><button class="faq-question" type="button" aria-expanded="false">Can I request an urgent appointment?<span>+</span></button><div class="faq-answer">Use the appointment form and choose “Tooth discomfort / urgent care.” For severe symptoms or a medical emergency, contact the appropriate emergency service directly.</div></div><div class="faq-item"><button class="faq-question" type="button" aria-expanded="false">How will the clinic confirm my slot?<span>+</span></button><div class="faq-answer">This demo prepares a WhatsApp enquiry. The clinic reviews the details and confirms availability personally; submitting the form does not guarantee an appointment.</div></div><div class="faq-item"><button class="faq-question" type="button" aria-expanded="false">Can treatment costs be shown online?<span>+</span></button><div class="faq-answer">Guide prices can be added for suitable services, while treatments that depend on assessment can be clearly marked as consultation-based.</div></div></div>
+      </div>
+    </section>
+
+    <section class="booking" id="booking">
+      <div class="container booking-shell reveal">
+        <div class="booking-copy"><div class="label">Appointment request</div><h2 class="heading">Take the first step with confidence.</h2><p>Tell the clinic what you need and choose a preferred slot. No payment is collected and the appointment is only confirmed after follow-up.</p><ul><li>✓ Structured request saved in this browser</li><li>✓ Ready-to-send WhatsApp summary</li><li>✓ Personal confirmation by clinic staff</li></ul></div>
+        <form class="booking-form" id="bookingForm"><h3>Request your visit</h3><div class="form-grid"><div class="field"><label for="name">Patient name</label><input id="name" name="name" required autocomplete="name" placeholder="Full name"></div><div class="field"><label for="phone">Mobile number</label><input id="phone" name="phone" required autocomplete="tel" placeholder="01x-xxxxxxx"></div><div class="field"><label for="care">Care needed</label><select id="care" name="care" required><option value="">Choose one</option><option>Check-up & cleaning</option><option>Family dentistry</option><option>Whitening</option><option>Aligners & smile planning</option><option>Tooth discomfort / urgent care</option><option>Repair & restoration</option></select></div><div class="field"><label for="patientType">Patient</label><select id="patientType" name="patientType" required><option value="">Choose one</option><option>Adult</option><option>Child</option><option>Senior</option></select></div><div class="field"><label for="date">Preferred date</label><input id="date" name="date" type="date" required></div><div class="field"><label for="time">Preferred time</label><select id="time" name="time" required><option value="">Choose one</option><option>9:00 AM</option><option>11:00 AM</option><option>2:00 PM</option><option>4:00 PM</option></select></div><div class="field full"><label for="notes">Concern or request</label><textarea id="notes" name="notes" placeholder="Briefly describe what brings you in. Do not include sensitive medical details on this demo."></textarea></div></div><div class="form-actions"><button class="button button-primary" type="submit">Continue on WhatsApp</button><span class="form-status" id="formStatus" role="status"></span></div></form>
+      </div>
+    </section>
+
+    <section class="location" id="location" aria-labelledby="dentalgate-location-title">
+      <div class="container location-grid">
+        <div class="location-copy reveal"><div class="label">Find us</div><h2 class="heading" id="dentalgate-location-title">Care close to central Kuala Lumpur.</h2><p class="lead">Use the exact map pin below to plan your visit and open directions on your phone.</p><address class="location-address">MyBizgate, Kampung Pandan<br>55100 Kuala Lumpur</address><a class="button button-white" href="https://www.google.com/maps/search/?api=1&amp;query=3.144827966176431%2C101.74171596840188" target="_blank" rel="noopener">Open in Google Maps</a></div>
+        <div class="location-map reveal"><iframe title="Map to Dental Gate Clinic in Kampung Pandan, Kuala Lumpur" src="https://www.google.com/maps?q=3.144827966176431,101.74171596840188&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><a class="button button-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=3.144827966176431%2C101.74171596840188" target="_blank" rel="noopener">Get directions</a></div>
+      </div>
+    </section>
+
+    <section class="mybizgate-cta" id="mybizgate" aria-labelledby="mybizgate-title">
+      <div class="container mybizgate-panel">
+        <div><div class="label">Website by myBizGate</div><h2 class="heading" id="mybizgate-title">Want a clearer digital front door for your business?</h2><p>myBizGate creates professional Malaysian business websites with service and package pages, enquiry or booking flows, WhatsApp handoff, review sections and managed support.</p><div class="mybizgate-services"><span>Professional website</span><span>Lead and booking flow</span><span>Managed yearly support</span></div></div>
+        <a class="button button-primary" href="https://mybizgate.com/" target="_blank" rel="noopener">Explore website packages →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container footer-row"><span>© <span id="year"></span> Dental Gate Clinic demo by myBizGate.</span><span>Proposal content only · not medical advice · sample rating and social data</span></div></footer>
+
+  <script>
+    const menuToggle = document.querySelector('#menuToggle');
+    const navLinks = document.querySelector('#navLinks');
+    const filterTabs = [...document.querySelectorAll('.filter-tab')];
+    const treatmentCards = [...document.querySelectorAll('.treatment-card')];
+    const bookingForm = document.querySelector('#bookingForm');
+    const formStatus = document.querySelector('#formStatus');
+    const dateInput = document.querySelector('#date');
+    const heroSlides = [...document.querySelectorAll('.hero-slide')];
+    const heroDots = document.querySelector('#heroDots');
+    const heroPause = document.querySelector('#heroPause');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let heroIndex = 0;
+    let heroTimer;
+    let heroPaused = reduceMotion;
+
+    const showHero = (index) => {
+      heroIndex = (index + heroSlides.length) % heroSlides.length;
+      heroSlides.forEach((slide, slideIndex) => {
+        const active = slideIndex === heroIndex;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', String(!active));
+      });
+      heroDots.querySelectorAll('button').forEach((dot, dotIndex) => {
+        const active = dotIndex === heroIndex;
+        dot.classList.toggle('is-active', active);
+        dot.setAttribute('aria-pressed', String(active));
+      });
+    };
+    const stopHero = () => {
+      clearInterval(heroTimer);
+      heroTimer = undefined;
+    };
+    const startHero = () => {
+      stopHero();
+      if (!heroPaused && !document.hidden && heroSlides.length > 1) {
+        heroTimer = setInterval(() => showHero(heroIndex + 1), 6500);
+      }
+    };
+    heroSlides.forEach((slide, index) => {
+      const dot = document.createElement('button');
+      const image = slide.querySelector('img');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Show banner ${index + 1} of ${heroSlides.length}: ${image.alt}`);
+      dot.addEventListener('click', () => { showHero(index); startHero(); });
+      heroDots.append(dot);
+    });
+    heroPause.textContent = heroPaused ? '▶' : '❚❚';
+    heroPause.setAttribute('aria-label', heroPaused ? 'Play banner animation' : 'Pause banner animation');
+    heroPause.setAttribute('aria-pressed', String(heroPaused));
+    heroPause.addEventListener('click', () => {
+      heroPaused = !heroPaused;
+      heroPause.textContent = heroPaused ? '▶' : '❚❚';
+      heroPause.setAttribute('aria-label', heroPaused ? 'Play banner animation' : 'Pause banner animation');
+      heroPause.setAttribute('aria-pressed', String(heroPaused));
+      startHero();
+    });
+    showHero(0);
+    startHero();
+    document.addEventListener('visibilitychange', startHero);
+
+    const closeMenu = () => {
+      navLinks.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    };
+    menuToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      document.body.classList.toggle('menu-open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+    navLinks.addEventListener('click', (event) => { if (event.target.closest('a')) closeMenu(); });
+
+    filterTabs.forEach((tab) => tab.addEventListener('click', () => {
+      const filter = tab.dataset.filter;
+      filterTabs.forEach((item) => { item.classList.remove('active'); item.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      treatmentCards.forEach((card) => { card.hidden = filter !== 'all' && card.dataset.category !== filter; });
+    }));
+
+    document.querySelectorAll('.faq-question').forEach((button) => button.addEventListener('click', () => {
+      const answer = button.nextElementSibling;
+      const open = button.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-question').forEach((item) => { item.setAttribute('aria-expanded', 'false'); item.nextElementSibling.classList.remove('open'); });
+      if (!open) { button.setAttribute('aria-expanded', 'true'); answer.classList.add('open'); }
+    }));
+
+    const today = new Date();
+    dateInput.min = today.toISOString().split('T')[0];
+    document.querySelector('#year').textContent = String(today.getFullYear());
+
+    bookingForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(bookingForm).entries());
+      const message = [
+        'Dental Gate Clinic appointment request',
+        `Patient: ${data.name}`,
+        `Mobile: ${data.phone}`,
+        `Care needed: ${data.care}`,
+        `Patient type: ${data.patientType}`,
+        `Preferred slot: ${data.date} at ${data.time}`,
+        `Concern or request: ${data.notes || '-'}`,
+        'I understand this is a request and requires clinic confirmation.'
+      ].join('\n');
+      localStorage.setItem('mybizgate_demo_dentalgate_enquiry', JSON.stringify({ ...data, createdAt: new Date().toISOString() }));
+      formStatus.textContent = 'Saved in this browser. Opening WhatsApp…';
+      window.open(`https://wa.me/601158121239?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+    });
+
+    const revealItems = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+      }), { threshold: .1 });
+      revealItems.forEach((item) => observer.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add('visible'));
+    }
+  </script>
+</body>
+</html>
