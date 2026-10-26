@@ -1,4 +1,0 @@
-https://www.google.com/maps/search/?api=1&query=3.144827966176431%2C101.74171596840188
-https://www.google.com/maps/dir/?api=1&destination=3.144827966176431%2C101.74171596840188
-
-
