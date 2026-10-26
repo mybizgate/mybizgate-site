@@ -17,6 +17,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Add cache busting version
+        run: |
+          VERSION="${GITHUB_SHA::8}"
+          echo "Deploy version: $VERSION"
+          sed -i "s/__BUILD_VERSION__/$VERSION/g" mybizgate-site/index.html
+
       - name: Deploy MyBizGate via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
@@ -25,7 +31,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
-
           local-dir: ./mybizgate-site/
           server-dir: public_html/
 
