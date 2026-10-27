@@ -1,44 +1,28 @@
-name: Deploy MyBizGate Production
+# Minimal caller workflow. All build/QA/deploy logic lives in the shared
+# MyBizGate platform workflow; keep this file small and config-driven.
+name: Deploy Production
 
 on:
   push:
     branches:
       - deploy
+  workflow_dispatch:
 
 concurrency:
-  group: mybizgate-production
-  cancel-in-progress: true
+  group: production-${{ github.repository }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Add cache busting version
-        run: |
-          VERSION="${GITHUB_SHA::8}"
-          echo "Deploy version: $VERSION"
-          sed -i "s/__BUILD_VERSION__/$VERSION/g" index.html
-
-      - name: Deploy MyBizGate via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./
-          server-dir: public_html/
-
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/node_modules/**
-            README.md
-            README.txt
-            AGENTS.md
+    uses: mybizgate/mybizgate-platform/.github/workflows/static-site-deploy.yml@main
+    with:
+      deploy_dir: ${{ vars.DEPLOY_DIR }}
+      site_domain: ${{ vars.SITE_DOMAIN }}
+      site_name: ${{ vars.SITE_NAME }}
+    secrets:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}

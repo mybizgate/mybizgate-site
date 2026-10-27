@@ -1,0 +1,33 @@
+# MyBizGate site configuration. The slug is the permanent identity; the domain may change later.
+client:
+  name: MyBizGate
+  slug: mybizgate
+template:
+  type: blank
+domain:
+  type: custom
+  primary: mybizgate.com
+  dns_mode: awedns
+hosting:
+  deploy_dir: public_html/
+  ftp_account: shared
+site:
+  kind: corporate
+  environment: production
+  production_url: https://mybizgate.com
+  identity: MyBizGate
+build:
+  exclude: []
+  images:
+    convert: true
+    quality: 82
+    max_width: 1920
+    preserve: []
+  cache_bust: true
+qa:
+  lighthouse: false
+  browser_smoke: false
+  screenshots: false
+github:
+  repo: mybizgate-site
+  visibility: public
